@@ -3,7 +3,7 @@
 script_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 application_dir="/var/app"
-parameters_file="${application_dir}/app/config/parameters.yml"
+parameters_file="${application_dir}/app/config/parameters.yml.dist"
 secret=`apg -a 1 -M nl -n 1 -m 40 -E ghijklmnopqrstuvwxyz`
 linked_database="0"
 
@@ -26,38 +26,38 @@ if [ $linked_database = "1" ]; then
 fi
 
 if [ $linked_database = "1" ]; then
-    sed -i "s/^\\( *database_driver:\\).*/\\1 ${database_driver}/" "$parameters_file"
+    sed -i "s/^\\( *database\.driver:\\).*/\\1 ${database_driver}/" "$parameters_file"
     RETVAL=$?
     if [ $RETVAL -ne 0 ]; then
         exit $RETVAL
     fi
 
-    sed -i "s/^\\( *database_host:\\).*/\\1 ${database_host}/" "$parameters_file"
+    sed -i "s/^\\( *database\.host:\\).*/\\1 ${database_host}/" "$parameters_file"
     RETVAL=$?
     if [ $RETVAL -ne 0 ]; then
         exit $RETVAL
     fi
 
-    sed -i "s/^\\( *database_port:\\).*/\\1 ${database_port}/" "$parameters_file"
+    sed -i "s/^\\( *database\.port:\\).*/\\1 ${database_port}/" "$parameters_file"
     RETVAL=$?
     if [ $RETVAL -ne 0 ]; then
         exit $RETVAL
     fi
 
-    sed -i "s/^\\( *database_user:\\).*/\\1 ${database_user}/" "$parameters_file"
+    sed -i "s/^\\( *database\.user:\\).*/\\1 ${database_user}/" "$parameters_file"
     RETVAL=$?
     if [ $RETVAL -ne 0 ]; then
         exit $RETVAL
     fi
 
-    sed -i "s/^\\( *database_password:\\).*/\\1 ${database_password}/" "$parameters_file"
+    sed -i "s/^\\( *database\.password:\\).*/\\1 ${database_password}/" "$parameters_file"
     RETVAL=$?
     if [ $RETVAL -ne 0 ]; then
         exit $RETVAL
     fi
 fi
 
-sed -i "s/^\\( *secret:\\).*/\\1 ${secret}/" "$parameters_file"
+sed -i "s/^\\( *app\.secret:\\).*/\\1 ${secret}/" "$parameters_file"
 RETVAL=$?
 if [ $RETVAL -ne 0 ]; then
     exit $RETVAL
